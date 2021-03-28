@@ -22,11 +22,23 @@ table_df = pd.read_sql_table(
     "ramen_noodles",
     con=engine
 )
+print("Brand?")
 brand = input()
+print("Variety?")
 variety = input()
 sql = text('select Stars from ramen_noodles where Brand=:mv and Variety=:ml')
 Session = sessionmaker(bind=engine)
 session = Session()
 rating = session.execute(sql, {'mv': brand, 'ml': variety})
 result = [row[0] for row in rating]
-print(result)
+
+print(str(result[0]) + ' out of 5 stars')
+if float(result[0]) >= 4:
+    print('Mmmmm delicious')
+elif float(result[0]) <= 1.5:
+    print('Don\'t eat these yo')
+else:
+    print('Worth trying')
+
+
+
